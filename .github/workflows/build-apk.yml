@@ -14,9 +14,8 @@ jobs:
 
       - name: Unpack project
         run: |
-          unzip mystery-button.zip
-          cp -a mystery-button/. .
-          rm -rf mystery-button
+          unzip -o mystery-button.zip
+          
 
       - uses: actions/setup-java@v4
         with:
