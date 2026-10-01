@@ -1,0 +1,42 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unpack project
+        run: |
+          unzip mystery-button.zip
+          cp -a mystery-button/. .
+          rm -rf mystery-button
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Prepare mystery
+        run: |
+          mkdir -p app/src/main/res/raw
+          echo 'aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy90cmFuc2NvZGVkLzUvNTcvVG95X3Bob25lX2RpaW5nX2JhdHRlcnkub2dnL1RveV9waG9uZV9kaW5nX2JhdHRlcnkub2dnLm1wMw==' | base64 -d > /tmp/source
+          curl -L --fail --retry 3 -o app/src/main/res/raw/mystery.mp3 "$(cat /tmp/source)"
+
+      - name: Build APK
+        run: gradle assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mystery-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
