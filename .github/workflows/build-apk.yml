@@ -28,8 +28,8 @@ jobs:
 
       - name: Prepare mystery
         run: |
-          mkdir -p app/src/main/res/raw
-          echo 'aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy81LzU3L1RveV9waG9uZV9kaW5nX2JhdHRlcnkub2dn' | base64 -d > /tmp/source
+           mkdir -p app/src/main/res/raw
+          echo 'aHR0cHM6Ly9jb21tb25zLndpa2ltZWRpYS5vcmcvd2lra2kvU3BlY2lhbDpSZWRpcmVjdC9maWxlL0FpcnBsYW5lX0NoaW1lX1NvdW5kX0VmZmVjdC5vZ2c=' | base64 -d > /tmp/source
           curl -L --fail --retry 3 -o app/src/main/res/raw/mystery.ogg "$(cat /tmp/source)"
 
       - name: Build APK
