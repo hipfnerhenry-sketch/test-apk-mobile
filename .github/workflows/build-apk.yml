@@ -27,10 +27,10 @@ jobs:
           gradle-version: '8.9'
 
       - name: Prepare mystery
- run: |
-  mkdir -p app/src/main/res/raw
-  echo 'aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy81LzU3L1RveV9waG9uZV9kaW5nX2JhdHRlcnkub2dn' | base64 -d > /tmp/source
-  curl -L --fail --retry 3 -o app/src/main/res/raw/mystery.ogg "$(cat /tmp/source)"
+        run: |
+          mkdir -p app/src/main/res/raw
+          echo 'aHR0cHM6Ly91cGxvYWQud2lraW1lZGlhLm9yZy93aWtpcGVkaWEvY29tbW9ucy81LzU3L1RveV9waG9uZV9kaW5nX2JhdHRlcnkub2dn' | base64 -d > /tmp/source
+          curl -L --fail --retry 3 -o app/src/main/res/raw/mystery.ogg "$(cat /tmp/source)"
 
       - name: Build APK
         run: gradle assembleDebug
